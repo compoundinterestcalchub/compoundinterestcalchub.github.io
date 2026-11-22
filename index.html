@@ -1,0 +1,977 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="google-site-verification" content="HoWofmErOOKMSn8dHeXvBTb5cGoEBEB1rQ7Y3CrUYgY" />
+    <link rel="canonical" href="https://compoundinterestcalchub.github.io/" />
+    <meta property="og:url" content="https://compoundinterestcalchub.github.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Compound Interest Calculator — CompoundInterestHub</title>
+    <meta name="description" content="Free compound interest calculator: enter your principal, rate, years, compounding frequency and monthly contributions to see future value, total interest and a year-by-year growth breakdown. Plus plain-English guides on the formula, the Rule of 72 and starting early." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CompoundInterestHub" />
+    <meta property="og:title" content="Compound Interest Calculator — CompoundInterestHub" />
+    <meta property="og:description" content="See how your money grows with compound interest. Future value, total contributions, interest earned, a growth chart and a year-by-year breakdown — plus plain-English guides." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Compound Interest Calculator — CompoundInterestHub" />
+    <meta name="twitter:description" content="Free compound interest calculator with growth chart, year-by-year breakdown and plain-English guides on the formula and the Rule of 72." />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "CompoundInterestHub",
+      "url": "https://compoundinterestcalchub.github.io/",
+      "description": "A free compound interest calculator with plain-English guides on how compound growth works.",
+      "inLanguage": "en"
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #f6f9f7;
+        --surface: #ffffff;
+        --surface-2: #eef4f0;
+        --ink: #152420;
+        --ink-soft: #44564e;
+        --line: #d7e2db;
+        --accent: #047857;
+        --accent-strong: #065f46;
+        --accent-soft: #d9efe4;
+        --accent-ink: #ffffff;
+        --gold: #b45309;
+        --input-bg: #ffffff;
+        --shadow: 0 10px 30px rgba(6, 60, 42, 0.08);
+        color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0a1411;
+          --surface: #101d18;
+          --surface-2: #16261f;
+          --ink: #e7f0eb;
+          --ink-soft: #a9bcb2;
+          --line: #26382f;
+          --accent: #34d399;
+          --accent-strong: #6ee7b7;
+          --accent-soft: #173b2d;
+          --accent-ink: #06231a;
+          --gold: #f0b35e;
+          --input-bg: #0d1813;
+          --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+          color-scheme: dark;
+        }
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: 1.0625rem;
+        line-height: 1.65;
+      }
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2.25rem; }
+      a { color: var(--accent-strong); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+      a:hover { color: var(--accent); }
+      :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+      /* ---------- Header ---------- */
+      .site-header {
+        background: var(--surface);
+        border-bottom: 1px solid var(--line);
+        position: sticky; top: 0; z-index: 20;
+      }
+      .header-inner {
+        max-width: 1120px; margin: 0 auto; padding: 0.7rem 1.25rem;
+        display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+      }
+      .brand {
+        font-family: "Lora", Georgia, serif; font-weight: 700; font-size: 1.3rem;
+        color: var(--ink); text-decoration: none; letter-spacing: -0.01em;
+        display: inline-flex; align-items: center; gap: 0.55rem; min-height: 2.25rem;
+      }
+      .brand .mark {
+        width: 30px; height: 30px; border-radius: 8px; flex: none;
+        background: var(--accent); color: var(--accent-ink);
+        display: inline-flex; align-items: center; justify-content: center;
+        font-family: "Public Sans", sans-serif; font-weight: 700; font-size: 1rem;
+      }
+      .brand em { font-style: normal; color: var(--accent); }
+      nav.main-nav { margin-left: auto; }
+      nav.main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 0.4rem; }
+      nav.main-nav a {
+        display: inline-flex; align-items: center; min-height: 2.25rem; padding: 0.3rem 0.65rem;
+        color: var(--ink-soft); text-decoration: none; font-weight: 600; font-size: 0.95rem; border-radius: 8px;
+      }
+      nav.main-nav a:hover { color: var(--accent-strong); background: var(--surface-2); }
+      nav.main-nav a[aria-current="page"] { color: var(--accent-strong); background: var(--accent-soft); }
+
+      /* ---------- Layout ---------- */
+      .wrap { max-width: 1120px; margin: 0 auto; padding: 0 1.25rem 4rem; }
+      .prose { max-width: 46rem; }
+      .prose p { margin: 0 0 1.1rem; }
+      .prose ul, .prose ol { margin: 0 0 1.1rem; padding-left: 1.4rem; }
+      .prose li { margin-bottom: 0.45rem; }
+      h1, h2, h3 { font-family: "Lora", Georgia, serif; line-height: 1.25; color: var(--ink); }
+      h1 { font-size: 2.35rem; margin: 0 0 0.9rem; letter-spacing: -0.015em; }
+      h2 { font-size: 1.65rem; margin: 2.6rem 0 0.8rem; letter-spacing: -0.01em; }
+      h3 { font-size: 1.2rem; margin: 1.8rem 0 0.55rem; }
+      .lede { font-size: 1.16rem; color: var(--ink-soft); max-width: 46rem; }
+      .page-head { padding: 2.4rem 0 0.4rem; }
+      .crumb { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 0.6rem; }
+      .crumb a { color: var(--ink-soft); }
+
+      /* ---------- Calculator ---------- */
+      .calc-shell {
+        margin-top: 1.6rem;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        box-shadow: var(--shadow);
+        padding: 1.6rem;
+        display: grid; grid-template-columns: 340px 1fr; gap: 2rem;
+      }
+      .calc-shell h2 { margin-top: 0; font-size: 1.35rem; }
+      .field { margin-bottom: 1.05rem; }
+      .field label { display: block; font-weight: 600; font-size: 0.92rem; margin-bottom: 0.35rem; }
+      .field .hint { font-weight: 400; color: var(--ink-soft); font-size: 0.82rem; display: block; margin-top: 0.25rem; }
+      .input-row { display: flex; align-items: stretch; }
+      .input-row .prefix, .input-row .suffix {
+        display: inline-flex; align-items: center; padding: 0 0.6rem;
+        background: var(--surface-2); border: 1px solid var(--line); color: var(--ink-soft); font-weight: 600; font-size: 0.95rem;
+      }
+      .input-row .prefix { border-right: 0; border-radius: 9px 0 0 9px; }
+      .input-row .suffix { border-left: 0; border-radius: 0 9px 9px 0; }
+      .input-row input {
+        flex: 1; min-width: 0; width: 100%;
+        border: 1px solid var(--line); background: var(--input-bg); color: var(--ink);
+        font: inherit; font-size: 1.05rem; font-weight: 600; padding: 0.45rem 0.7rem;
+      }
+      .input-row input:first-child { border-radius: 9px 0 0 9px; }
+      .input-row input:last-child { border-radius: 0 9px 9px 0; }
+      .input-row input:only-child { border-radius: 9px; }
+      select {
+        width: 100%; border: 1px solid var(--line); background: var(--input-bg); color: var(--ink);
+        font: inherit; font-size: 1rem; font-weight: 600; padding: 0.45rem 0.7rem; border-radius: 9px;
+      }
+      input[type="range"] { width: 100%; accent-color: var(--accent); min-height: 2.25rem; }
+      .preset-row { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.4rem; }
+      .preset-row button {
+        border: 1px solid var(--line); background: var(--surface-2); color: var(--ink);
+        border-radius: 999px; padding: 0.3rem 0.8rem; font: inherit; font-size: 0.88rem; font-weight: 600; cursor: pointer;
+      }
+      .preset-row button:hover { border-color: var(--accent); color: var(--accent-strong); }
+
+      .results .fv-label { font-size: 0.92rem; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+      .fv-value { font-family: "Lora", Georgia, serif; font-size: 2.9rem; font-weight: 700; line-height: 1.1; color: var(--accent-strong); margin: 0.15rem 0 1rem; }
+      .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.4rem; }
+      .stat { border-top: 3px solid var(--accent-soft); padding-top: 0.55rem; }
+      .stat.gold { border-top-color: var(--gold); }
+      .stat .s-label { font-size: 0.85rem; color: var(--ink-soft); font-weight: 600; }
+      .stat .s-value { font-size: 1.3rem; font-weight: 700; margin-top: 0.1rem; }
+      .chart-title { font-weight: 700; font-size: 0.95rem; margin: 0 0 0.4rem; }
+      .chart-box { background: var(--surface-2); border-radius: 10px; padding: 0.9rem 0.7rem 0.4rem; }
+      .chart-box svg { display: block; width: 100%; height: auto; }
+      .legend { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--ink-soft); margin-top: 0.5rem; }
+      .legend span::before { content: ""; display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 0.4rem; vertical-align: -1px; }
+      .legend .lg-bal::before { background: var(--accent); }
+      .legend .lg-con::before { background: var(--gold); }
+
+      .table-scroll { margin-top: 1.6rem; }
+      table.breakdown { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+      table.breakdown caption { text-align: left; font-weight: 700; font-family: "Lora", Georgia, serif; font-size: 1.1rem; padding-bottom: 0.6rem; }
+      table.breakdown th, table.breakdown td { padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; }
+      table.breakdown th:first-child, table.breakdown td:first-child { text-align: left; }
+      table.breakdown thead th { color: var(--ink-soft); font-size: 0.85rem; border-bottom: 2px solid var(--line); }
+      table.breakdown tbody tr:hover { background: var(--surface-2); }
+
+      .formula-box {
+        background: var(--surface-2); border-radius: 10px; padding: 1.1rem 1.3rem; margin: 1.4rem 0;
+        font-family: "Lora", Georgia, serif; font-size: 1.25rem; text-align: center;
+      }
+      .callout {
+        background: var(--accent-soft); border-radius: 10px; padding: 1.1rem 1.3rem; margin: 1.5rem 0;
+      }
+      .callout p:last-child { margin-bottom: 0; }
+      .callout .callout-title { font-weight: 700; margin-bottom: 0.3rem; }
+
+      .guide-list { list-style: none; margin: 1.2rem 0 0; padding: 0; max-width: 46rem; }
+      .guide-list li { padding: 1rem 0; border-bottom: 1px solid var(--line); }
+      .guide-list li:first-child { border-top: 1px solid var(--line); }
+      .guide-list a { font-family: "Lora", Georgia, serif; font-size: 1.18rem; font-weight: 600; text-decoration: none; }
+      .guide-list a:hover { text-decoration: underline; }
+      .guide-list p { margin: 0.3rem 0 0; color: var(--ink-soft); font-size: 0.98rem; }
+
+      details.faq { border-bottom: 1px solid var(--line); padding: 0.35rem 0; max-width: 46rem; }
+      details.faq summary { cursor: pointer; font-weight: 700; font-family: "Lora", Georgia, serif; font-size: 1.08rem; padding: 0.55rem 0; list-style-position: outside; }
+      details.faq p { color: var(--ink); margin: 0.2rem 0 1rem; }
+
+      form.contact { max-width: 34rem; }
+      form.contact label { display: block; font-weight: 600; font-size: 0.92rem; margin: 1rem 0 0.35rem; }
+      form.contact input, form.contact textarea {
+        width: 100%; border: 1px solid var(--line); background: var(--input-bg); color: var(--ink);
+        font: inherit; padding: 0.55rem 0.7rem; border-radius: 9px;
+      }
+      form.contact textarea { min-height: 9rem; resize: vertical; }
+      .btn {
+        display: inline-flex; align-items: center; justify-content: center; min-height: 2.75rem;
+        background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 9px;
+        font: inherit; font-weight: 700; padding: 0.6rem 1.4rem; cursor: pointer; margin-top: 1.2rem; text-decoration: none;
+      }
+      .btn:hover { background: var(--accent-strong); color: var(--accent-ink); }
+      @media (prefers-color-scheme: dark) { .btn:hover { color: #06231a; } }
+      .form-note { font-size: 0.9rem; color: var(--ink-soft); margin-top: 0.8rem; }
+
+      footer.site-footer { border-top: 1px solid var(--line); background: var(--surface); margin-top: 2rem; }
+      .footer-inner { max-width: 1120px; margin: 0 auto; padding: 2rem 1.25rem 2.4rem; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem; }
+      .footer-inner h3 { margin: 0 0 0.7rem; font-size: 1rem; font-family: "Public Sans", sans-serif; }
+      .footer-inner ul { list-style: none; margin: 0; padding: 0; }
+      .footer-inner li { margin-bottom: 0.35rem; }
+      .footer-inner a { color: var(--ink-soft); text-decoration: none; display: inline-flex; align-items: center; min-height: 2rem; }
+      .footer-inner a:hover { color: var(--accent-strong); text-decoration: underline; }
+      .footer-inner p { color: var(--ink-soft); font-size: 0.93rem; margin: 0; max-width: 22rem; }
+      .footer-base { max-width: 1120px; margin: 0 auto; padding: 0 1.25rem 2rem; color: var(--ink-soft); font-size: 0.88rem; }
+
+      .route { display: none; }
+      .route.active { display: block; }
+
+      @media (max-width: 860px) {
+        .calc-shell { grid-template-columns: 1fr; padding: 1.2rem; gap: 1.4rem; }
+        .fv-value { font-size: 2.3rem; }
+        .footer-inner { grid-template-columns: 1fr; gap: 1.4rem; }
+        h1 { font-size: 1.9rem; }
+      }
+      @media (max-width: 560px) {
+        .stat-grid { grid-template-columns: 1fr; gap: 0.7rem; }
+        table.breakdown { font-size: 0.85rem; }
+        table.breakdown th, table.breakdown td { padding: 0.45rem 0.35rem; }
+        .brand { font-size: 1.12rem; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#/"><span class="mark" aria-hidden="true">%</span>Compound<em>Interest</em>Hub</a>
+        <nav class="main-nav" aria-label="Main">
+          <ul>
+            <li><a href="#/" data-nav="home">Calculator</a></li>
+            <li><a href="#/guides" data-nav="guides">Guides</a></li>
+            <li><a href="#/about" data-nav="about">About</a></li>
+            <li><a href="#/faq" data-nav="faq">FAQ</a></li>
+            <li><a href="#/contact" data-nav="contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="wrap" id="top">
+
+      <!-- ================= HOME ================= -->
+      <section class="route" data-route="home">
+        <div class="page-head">
+          <h1>Compound Interest Calculator</h1>
+          <p class="lede">Enter what you start with, what you add each month, and how long you can leave it alone. The calculator shows what your money could grow into, how much of that growth is interest, and exactly how the balance builds year by year.</p>
+        </div>
+
+        <div class="calc-shell" id="calculator">
+          <div class="inputs">
+            <h2>Your numbers</h2>
+            <div class="field">
+              <label for="in-principal">Initial amount (principal)</label>
+              <div class="input-row">
+                <span class="prefix">$</span>
+                <input type="number" id="in-principal" value="10000" min="0" step="100" inputmode="decimal" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="in-contribution">Monthly contribution <span style="font-weight:400;color:var(--ink-soft)">(optional)</span></label>
+              <div class="input-row">
+                <span class="prefix">$</span>
+                <input type="number" id="in-contribution" value="200" min="0" step="10" inputmode="decimal" />
+              </div>
+              <span class="hint">Added at the end of each month. Leave at 0 to model a lump sum only.</span>
+            </div>
+            <div class="field">
+              <label for="in-rate">Annual interest rate</label>
+              <div class="input-row">
+                <input type="number" id="in-rate" value="7" min="0" max="50" step="0.1" inputmode="decimal" />
+                <span class="suffix">%</span>
+              </div>
+              <input type="range" id="in-rate-range" min="0" max="15" step="0.25" value="7" aria-label="Annual interest rate slider" />
+            </div>
+            <div class="field">
+              <label for="in-years">Years to grow</label>
+              <div class="input-row">
+                <input type="number" id="in-years" value="30" min="1" max="60" step="1" inputmode="numeric" />
+                <span class="suffix">yrs</span>
+              </div>
+              <input type="range" id="in-years-range" min="1" max="50" step="1" value="30" aria-label="Years slider" />
+            </div>
+            <div class="field">
+              <label for="in-freq">Compounding frequency</label>
+              <select id="in-freq">
+                <option value="1">Yearly</option>
+                <option value="4">Quarterly</option>
+                <option value="12" selected>Monthly</option>
+                <option value="365">Daily</option>
+              </select>
+              <span class="hint">How often interest is calculated and added to your balance.</span>
+            </div>
+            <div class="field">
+              <label>Try an example</label>
+              <div class="preset-row">
+                <button type="button" data-preset="starter">First savings</button>
+                <button type="button" data-preset="retirement">Retirement saver</button>
+                <button type="button" data-preset="lump">Lump sum only</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="results" aria-live="polite">
+            <h2>Your result</h2>
+            <div class="fv-label">Future value</div>
+            <div class="fv-value" id="out-fv">$0</div>
+            <div class="stat-grid">
+              <div class="stat gold">
+                <div class="s-label">You put in</div>
+                <div class="s-value" id="out-contrib">$0</div>
+              </div>
+              <div class="stat">
+                <div class="s-label">Interest earned</div>
+                <div class="s-value" id="out-interest">$0</div>
+              </div>
+              <div class="stat">
+                <div class="s-label">Interest share of total</div>
+                <div class="s-value" id="out-share">0%</div>
+              </div>
+            </div>
+            <p class="chart-title">Balance at the end of each year</p>
+            <div class="chart-box">
+              <div id="chart"></div>
+              <div class="legend"><span class="lg-bal">Total balance</span><span class="lg-con">Money you contributed</span></div>
+            </div>
+            <div class="table-scroll">
+              <table class="breakdown">
+                <caption>Year-by-year growth breakdown</caption>
+                <thead>
+                  <tr><th scope="col">Year</th><th scope="col">Contributions</th><th scope="col">Interest earned</th><th scope="col">Balance</th></tr>
+                </thead>
+                <tbody id="breakdown-body"></tbody>
+              </table>
+            </div>
+            <p style="font-size:0.88rem;color:var(--ink-soft);margin-top:1rem">This is an estimate for learning purposes. It assumes a fixed rate and regular monthly contributions, and it does not account for taxes, fees or inflation. It is not financial advice — see our <a href="#/disclaimer">Disclaimer</a>.</p>
+          </div>
+        </div>
+
+        <div class="prose">
+          <h2>What compound interest actually is</h2>
+          <p>Compound interest is interest earned on interest. When you save or invest money, you earn interest on your starting amount. If you leave that interest where it is, the next round of interest is calculated on a slightly bigger balance — your original money plus the interest it has already earned. Over one or two years the difference is small. Over twenty or thirty years it becomes the main event: eventually, the interest your money earns each year can be larger than the amount you originally put in.</p>
+          <p>A garden makes a decent picture of it. A simple-interest account is like harvesting every apple the tree produces and eating them all — the tree stays the same size, so next year's harvest is the same. A compound-interest account is like letting some apples fall, take root and grow into new trees. After a while you are not harvesting from one tree but from a small orchard, and the orchard keeps planting itself. That self-planting quality is why compounding rewards patience more than it rewards cleverness.</p>
+          <p>Three things control how fast the orchard grows: how much you start with and add along the way, the rate of return, and — most powerful of all — time. The calculator above lets you move each of those levers and watch the outcome change. Try cutting the time in half while keeping everything else the same, and notice that the final balance falls by far more than half. That is the signature of compounding: growth is not a straight line, it is a curve that bends upward, and most of the bending happens late.</p>
+
+          <h2>The formula, in plain English</h2>
+          <p>The standard compound interest formula looks like this:</p>
+          <div class="formula-box">A = P (1 + r/n)<sup>nt</sup></div>
+          <p>Read it as a sentence and it stops being intimidating. <strong>A</strong> is the amount you end up with. <strong>P</strong> is the principal — what you start with. <strong>r</strong> is the annual interest rate written as a decimal, so 7% becomes 0.07. <strong>n</strong> is how many times a year the interest is compounded, and <strong>t</strong> is the number of years. The heart of the formula is the part in brackets: each compounding period, your balance is multiplied by slightly more than 1. Raising that to the power of <em>nt</em> simply means "do that multiplication over and over, once per period." Compounding is nothing more mysterious than repeated multiplication — but repeated multiplication, given enough repetitions, produces startling numbers.</p>
+          <p>One worked example makes it concrete. Put $10,000 at 7% for 30 years, compounded monthly, and the formula gives about <strong>$81,165</strong>. You contributed $10,000; growth supplied the other $71,165. Our guide <a href="#/guides/compound-interest-formula">Compound Interest Explained: The Formula in Plain English</a> walks through every symbol slowly, works several examples by hand, and shows where monthly contributions fit into the maths.</p>
+
+          <h2>Compound interest vs simple interest</h2>
+          <p>Simple interest is calculated only on the original principal, forever. That same $10,000 at 7% simple interest earns a flat $700 every year — $21,000 over 30 years, for a total of $31,000. Compound interest on the same terms reaches about $81,165. Same deposit, same rate, same three decades; the only difference is whether past interest is allowed to earn interest of its own. In the early years the two are nearly identical, which is why people underestimate compounding. The gap opens slowly, then suddenly: by year 30 the compounding account is adding more in a single year than the simple account adds in five.</p>
+          <p>The comparison cuts both ways, because debt compounds too. A credit card balance left unpaid is the same formula working against you — interest charged on interest, month after month. Understanding one side of the equation gives you a healthy respect for the other. For a fuller side-by-side with more examples, read <a href="#/guides/compound-vs-simple-interest">Compound vs Simple Interest: Real Examples</a>.</p>
+
+          <h2>The Rule of 72: a doubling shortcut</h2>
+          <p>Here is a trick worth memorising. Divide 72 by your annual rate of return, and the answer is roughly how many years it takes your money to double. At 6%, money doubles in about 12 years (and indeed $1 growing at 6% becomes about $2.01 in 12 years). At 8%, it doubles in about 9 years. At 12%, about 6 years. No calculator, no formula — just one division.</p>
+          <p>The Rule of 72 also runs in reverse, and that is where it gets sobering. If prices rise at 4% a year, the purchasing power of cash sitting idle halves in about 18 years. Money under a mattress is not standing still; it is shrinking on a schedule you can compute in your head. Our guide <a href="#/guides/rule-of-72">The Rule of 72: How Fast Your Money Doubles</a> explains why 72 works, where the shortcut is accurate, where it drifts, and how to use it for quick sanity checks on any savings or investing claim.</p>
+
+          <h2>Why starting early beats starting big</h2>
+          <p>Consider two savers who both put away $200 a month at a 7% average annual return. One starts at 25 and stops at 65: forty years of contributions totalling $96,000, growing to roughly <strong>$525,000</strong>. The other waits until 35 — same $200 a month, same return, same retirement age. Thirty years of contributions totalling $72,000 grow to roughly <strong>$244,000</strong>. The early starter put in only $24,000 more but ends with about $281,000 more. The extra decade did the heavy lifting, because the final decade of a compounding curve is where the balance is largest and each year's growth is biggest. Cutting off the <em>first</em> ten years removes the foundation the last ten years would have stood on.</p>
+          <p>This is not an argument that starting later is pointless — $244,000 is a serious sum, and the best start date available to anyone is today. It is an argument that time in the market is the one ingredient you cannot buy back later at any price. We break the full comparison down year by year in <a href="#/guides/starting-early">Why Starting at 25 Beats Starting at 35 (With Numbers)</a>.</p>
+
+          <h2>Does compounding frequency matter?</h2>
+          <p>Interest can be credited yearly, quarterly, monthly or even daily, and more frequent compounding does produce a slightly larger result: $10,000 at 8% for 20 years grows to about $46,610 compounded yearly, $49,268 compounded monthly, and $49,522 compounded daily. Real money — but notice the shape of those gains. Going from yearly to monthly adds about $2,658; going from monthly to daily adds only about $254. Frequency is a garnish, not the meal. The rate, the amount and above all the number of years matter far more, which is why our guide <a href="#/guides/compounding-frequency">How Often Should Interest Compound? Daily vs Monthly vs Yearly</a> advises comparing accounts on rate first and frequency second.</p>
+
+          <h2>Questions people ask us</h2>
+          <p>How accurate is this calculator? What return should I assume? Does inflation change the picture? We answer the questions we hear most often on our <a href="#/faq">FAQ page</a>, and the <a href="#/about">About page</a> explains who runs this site and how the numbers are computed. Everything here is educational: CompoundInterestHub teaches the maths of growing money, and nothing on the site is personalised financial advice — the <a href="#/disclaimer">Disclaimer</a> spells that out in full.</p>
+        </div>
+      </section>
+
+      <!-- ================= GUIDES INDEX ================= -->
+      <section class="route" data-route="guides">
+        <div class="page-head prose">
+          <h1>Guides to compound interest</h1>
+          <p class="lede">Five long, plain-English guides that take one idea each and work it properly — with real numbers you can check against the <a href="#/">calculator</a>.</p>
+        </div>
+        <ul class="guide-list">
+          <li>
+            <a href="#/guides/compound-interest-formula">Compound Interest Explained: The Formula in Plain English</a>
+            <p>Every symbol in A = P(1 + r/n)<sup>nt</sup> translated into ordinary words, with worked examples and the version of the formula that includes monthly contributions.</p>
+          </li>
+          <li>
+            <a href="#/guides/rule-of-72">The Rule of 72: How Fast Your Money Doubles</a>
+            <p>One division that tells you when your money doubles — why it works, when it is accurate, and how to use it on savings, investments and inflation.</p>
+          </li>
+          <li>
+            <a href="#/guides/compound-vs-simple-interest">Compound vs Simple Interest: Real Examples</a>
+            <p>The two kinds of interest side by side over 5, 10 and 30 years, and what the difference means for both savers and borrowers.</p>
+          </li>
+          <li>
+            <a href="#/guides/starting-early">Why Starting at 25 Beats Starting at 35 (With Numbers)</a>
+            <p>Two savers, the same monthly amount, a ten-year head start — and a gap of roughly $281,000 by retirement. The full year-by-year story.</p>
+          </li>
+          <li>
+            <a href="#/guides/compounding-frequency">How Often Should Interest Compound? Daily vs Monthly vs Yearly</a>
+            <p>More frequent compounding always wins, but by how much? The honest numbers, and why frequency should rarely decide where you save.</p>
+          </li>
+        </ul>
+        <div class="prose">
+          <h2>How to use these guides</h2>
+          <p>Each guide is self-contained, so you can start with whichever question brought you here. If you are brand new to the topic, the <a href="#/guides/compound-interest-formula">formula guide</a> is the natural first read, followed by the <a href="#/guides/rule-of-72">Rule of 72</a> for quick estimates. Every number in every guide was produced with the same maths as the <a href="#/">calculator on the homepage</a>, so you can reproduce any example yourself by typing it in — we encourage exactly that.</p>
+        </div>
+      </section>
+
+      <!-- ================= GUIDE 1 ================= -->
+      <section class="route" data-route="guide-formula">
+        <div class="page-head prose">
+          <p class="crumb"><a href="#/">Home</a> · <a href="#/guides">Guides</a></p>
+          <h1>Compound Interest Explained: The Formula in Plain English</h1>
+          <p class="lede">The compound interest formula frightens people out of proportion to how complicated it actually is. It is one idea — multiply, repeat — dressed up in letters. This guide undresses it.</p>
+        </div>
+        <div class="prose">
+          <h2>Start with the idea, not the formula</h2>
+          <p>Suppose you deposit $1,000 into an account paying 5% interest once a year, and you never touch it. After one year you have $1,050: your $1,000 plus $50 of interest. Here is the part that matters. In year two, the 5% is applied to $1,050, not to the original $1,000. You earn $52.50, bringing the balance to $1,102.50. In year three, interest is paid on $1,102.50, and so on. Each year the balance grows by 5% <em>of whatever it has become</em>, so the interest payment itself grows every year: $50, then $52.50, then $55.13, then $57.88. Nothing changed except that yesterday's interest started earning interest of its own. That is the whole of compounding.</p>
+          <p>Notice what the process really is: repeated multiplication by 1.05. After one year, $1,000 × 1.05. After two years, $1,000 × 1.05 × 1.05. After twenty years, $1,000 multiplied by 1.05 twenty times — which mathematicians write as $1,000 × 1.05<sup>20</sup>, giving $2,653. The formula you are about to meet is just shorthand for that sentence.</p>
+
+          <h2>The formula, symbol by symbol</h2>
+          <div class="formula-box">A = P (1 + r/n)<sup>nt</sup></div>
+          <p><strong>A — the amount at the end.</strong> This is what you are solving for: the final balance after all the compounding is done.</p>
+          <p><strong>P — the principal.</strong> Your starting amount, before any interest. In the example above, P is $1,000.</p>
+          <p><strong>r — the annual rate, as a decimal.</strong> Rates are quoted in percent, but the formula wants a decimal, so divide by 100: 5% becomes 0.05, 7% becomes 0.07, 8.5% becomes 0.085. This is the single most common source of errors when people use the formula by hand — if your answer comes out absurdly large, you probably fed in 7 instead of 0.07.</p>
+          <p><strong>n — how many times a year interest is compounded.</strong> Yearly compounding means n = 1, quarterly n = 4, monthly n = 12, daily n = 365. The formula divides the annual rate by n to get the rate for each individual period: monthly compounding at 6% means each month applies 0.06 ÷ 12 = 0.005, or half a percent.</p>
+          <p><strong>t — time in years.</strong> The exponent nt is simply the total number of compounding periods: monthly compounding for 10 years is 12 × 10 = 120 multiplications.</p>
+          <p>So the bracket, (1 + r/n), is "grow by one period's worth of interest," and the exponent says "do it nt times." Formula translated: <em>final amount = starting amount, grown by one period's interest, once for every period.</em> That is all it ever says.</p>
+
+          <h2>A worked example, slowly</h2>
+          <p>You invest $5,000 at 6% per year, compounded monthly, for 10 years. Then P = 5,000, r = 0.06, n = 12 and t = 10. Each month the balance grows by 0.06 ÷ 12 = 0.005, and there are 120 months, so A = 5,000 × (1.005)<sup>120</sup>. The term (1.005)<sup>120</sup> works out to about 1.8194, so A ≈ $9,097. You put in $5,000 and earned roughly $4,097 in interest — close to doubling your money in a decade, without adding a cent. Type these figures into the <a href="#/">calculator on our homepage</a> and you will get the same answer, because the calculator runs exactly this maths.</p>
+          <p>Now change one thing at a time and watch what happens — this is where real understanding lives. Double the time to 20 years and the result is not double but about $16,551: the second decade adds more than the first, because it compounds a bigger balance. Double the rate to 12% and 10 years produces about $16,501 — similar effect, different lever. Halve the starting amount and every result halves exactly. Of the four ingredients, principal scales the outcome, but rate and time <em>bend</em> it.</p>
+
+          <h2>Adding monthly contributions</h2>
+          <p>Most savers do not deposit one lump sum and wait; they add money every month. The formula grows a sibling term to handle that. If you contribute an amount C at the end of every month, those contributions themselves form a compounding stream, and the full picture is:</p>
+          <div class="formula-box">A = P(1 + r/n)<sup>nt</sup> &nbsp;+&nbsp; the growth of every monthly contribution</div>
+          <p>Each contribution compounds only for the time it is actually invested — the first one for nearly the whole term, the last one barely at all — which is why the arithmetic is tedious by hand and why tools exist. The logic, though, is identical: every dollar, whenever it arrives, gets multiplied by (1 + period rate) once for each period it stays. Our <a href="#/">calculator</a> simulates month by month, so contributions are handled exactly this way. It is also why <a href="#/guides/starting-early">starting early</a> matters so much: early contributions receive the most multiplications.</p>
+
+          <h2>Continuous compounding, briefly</h2>
+          <p>You may meet a cousin of the formula, A = Pe<sup>rt</sup>, where interest is compounded not monthly or daily but at every instant — "continuously." It is the mathematical limit as n grows without bound, and it appears in some textbooks and a few financial products. In practice it sits only slightly above daily compounding, and daily compounding sits only slightly above monthly. The practical lesson matches our guide on <a href="#/guides/compounding-frequency">compounding frequency</a>: past monthly, the differences become small change.</p>
+
+          <h2>Three mistakes to avoid</h2>
+          <p><strong>Mixing up the rate's units.</strong> If the rate is annual, t must be in years and n handles the within-year splitting. Feeding a monthly rate into r as though it were annual overstates growth twelvefold.</p>
+          <p><strong>Forgetting that returns vary.</strong> The formula assumes a smooth, fixed rate. Real investments wobble — a market that returns 12%, then −6%, then 9% does not behave like a steady 5%, even if the averages look similar, because losses compound too. Use the formula for savings accounts, bonds held to maturity, and long-run planning estimates, not as a promise about any particular investment.</p>
+          <p><strong>Ignoring inflation and tax.</strong> The formula gives the number of dollars, not their purchasing power. At 3% inflation, money needs to grow just to stand still in real terms — the <a href="#/guides/rule-of-72">Rule of 72</a> makes that easy to estimate. Interest may also be taxed, which trims the effective rate. A honest plan looks at the formula's answer and then asks what it will actually buy.</p>
+
+          <h2>The one-sentence summary</h2>
+          <p>Compound interest is repeated multiplication: your balance, times slightly more than one, over and over, with each round applied to everything the previous rounds built. Learn to see A = P(1 + r/n)<sup>nt</sup> as that sentence and you will never be intimidated by it again — and you will understand, viscerally, why the two levers that matter most are the rate and, above all, the time you give it. Try the numbers yourself in the <a href="#/">compound interest calculator</a>.</p>
+        </div>
+      </section>
+
+      <!-- ================= GUIDE 2 ================= -->
+      <section class="route" data-route="guide-rule72">
+        <div class="page-head prose">
+          <p class="crumb"><a href="#/">Home</a> · <a href="#/guides">Guides</a></p>
+          <h1>The Rule of 72: How Fast Your Money Doubles</h1>
+          <p class="lede">No spreadsheet, no formula, no calculator: one short division tells you how long compounding needs to turn your money into twice as much. Here is how the Rule of 72 works and how far you can trust it.</p>
+        </div>
+        <div class="prose">
+          <h2>The rule itself</h2>
+          <p>Divide 72 by your annual rate of return. The answer is approximately the number of years required for your money to double, assuming the return compounds once a year and you add nothing along the way.</p>
+          <p>At 4%, money doubles in about 18 years. At 6%, about 12 years. At 8%, about 9 years. At 9%, about 8 years. At 12%, about 6 years. At 3% — the neighbourhood of a decent savings account in a good year — doubling takes about 24 years, which tells you something important about cash savings all by itself.</p>
+          <p>Check one against reality: $25,000 invested at 9% for 8 years, compounded yearly, grows to about $49,814 — within a rounding error of the $50,000 the rule predicts. That is not a coincidence or a party trick; the rule is a genuine approximation of the <a href="#/guides/compound-interest-formula">compound interest formula</a>, compressed into mental arithmetic.</p>
+
+          <h2>Why 72?</h2>
+          <p>The exact doubling time for a rate r is ln(2) ÷ ln(1 + r) years — logarithms, which nobody wants at a kitchen table. For rates in the range people actually encounter, that expression is closely approximated by dividing a number near 70 by the rate expressed as a percentage. The financial world settled on 72 rather than 70 for two practical reasons: it nudges the estimate slightly upward, which corrects the approximation's error in the 6–10% range where accuracy matters most, and 72 is a wonderfully divisible number — it splits evenly by 2, 3, 4, 6, 8, 9 and 12, so the mental maths rarely produces awkward decimals. A fifteenth-century idea (the rule appears in print in Luca Pacioli's 1494 arithmetic text, presented as a known merchants' shortcut) survives because it is both accurate enough and easy.</p>
+
+          <h2>How accurate is it, honestly?</h2>
+          <p>Very good in the middle of the range, looser at the edges. At 8%, the rule says 9 years; the exact answer is 9.01 years — essentially perfect. At 6%, the rule says 12 years against an exact 11.9. At 2%, the rule says 36 years while the exact answer is about 35 — a year of drift. At 20%, the rule says 3.6 years against an exact 3.8. For quick decisions — "is this return meaningfully better than that one?" — errors of a few months are irrelevant. For signing contracts, use the real <a href="#/">calculator</a>.</p>
+          <p>There are refinements if you want them. For rates well above 10%, some people use 73 or 74; well below 5%, 70 or 71 tracks better. There is also a Rule of 114 for tripling and a Rule of 144 for quadrupling, built the same way. But the honest truth is that the plain 72 covers nearly everything a household needs.</p>
+
+          <h2>Running the rule in reverse: inflation and debt</h2>
+          <p>The rule works on anything that grows or shrinks by a percentage, which makes it a quiet alarm bell. If inflation runs at 4%, the buying power of money that earns nothing halves in 72 ÷ 4 = 18 years. At 6% inflation, it halves in 12. Cash that feels safely parked is on a countdown you can now compute in your head.</p>
+          <p>Debt doubles by the same arithmetic, only faster and crueller. A credit card balance at 24% APR, if you paid nothing at all, would double in about 3 years. Nobody literally pays nothing, but minimum payments can come close enough to that trajectory to stretch a modest balance across a decade. The Rule of 72 is the fastest way to feel, in your stomach, why high-rate debt is an emergency and why <a href="#/guides/compound-vs-simple-interest">compounding is a friend to savers and an enemy to borrowers</a>.</p>
+
+          <h2>Using the rule to plan</h2>
+          <p>The rule's best use is turning vague goals into schedules. Want to know how many doublings stand between you and a target? Money going from $10,000 to $160,000 needs four doublings (10 → 20 → 40 → 80 → 160). At 8%, each doubling takes about 9 years, so the journey takes roughly 36 years — or less, if you add contributions along the way, which is exactly the situation our <a href="#/">calculator</a> models. It also disciplines expectations: a scheme promising to double money in a year is claiming a 72% annual return, and the rule lets you say that out loud and hear how it sounds.</p>
+          <p>Combine the rule with the habit of <a href="#/guides/starting-early">starting early</a> and you get the deepest insight in personal finance, available without any maths beyond division: at typical long-run returns, your money doubles roughly every decade, so the number of doublings you collect is mostly decided by how many decades you give it. The last doubling is always the biggest in dollar terms. Retiring one doubling earlier is not a small sacrifice — it is half the final pile.</p>
+
+          <h2>The bottom line</h2>
+          <p>72 divided by the rate equals the years to double. It is approximate, ancient, and remarkably useful — for savings goals, for sniffing out unrealistic promises, and for understanding what inflation and card debt are quietly doing. Keep it in your head; keep the <a href="#/">full calculator</a> for the details.</p>
+        </div>
+      </section>
+
+      <!-- ================= GUIDE 3 ================= -->
+      <section class="route" data-route="guide-simple">
+        <div class="page-head prose">
+          <p class="crumb"><a href="#/">Home</a> · <a href="#/guides">Guides</a></p>
+          <h1>Compound vs Simple Interest: Real Examples</h1>
+          <p class="lede">Both pay you for the use of your money. One pays on the original deposit forever; the other pays on everything your money has become. The difference starts invisible and ends enormous — here are the numbers.</p>
+        </div>
+        <div class="prose">
+          <h2>The two definitions, without jargon</h2>
+          <p><strong>Simple interest</strong> is calculated only on the principal — the amount you started with. Deposit $1,000 at 5% simple interest and you earn $50 in year one, $50 in year two, $50 in year twenty. The interest payment never changes, because the base it is calculated on never changes. The formula is I = P × r × t: interest equals principal times rate times time. Straight line, no surprises.</p>
+          <p><strong>Compound interest</strong> is calculated on the principal plus all interest earned so far. The same $1,000 at 5%, compounded yearly, earns $50 in year one — but $52.50 in year two, because the base has grown to $1,050. By year twenty the annual interest payment alone is about $126, on its way to a final balance of $2,653 against simple interest's $2,000. If you want the full mechanics, our guide to <a href="#/guides/compound-interest-formula">the compound interest formula in plain English</a> takes it apart piece by piece.</p>
+
+          <h2>Side by side: $1,000 at 5%</h2>
+          <p>Year 1: simple $1,050, compound $1,050 — identical. Year 5: simple $1,250, compound about $1,276 — a $26 gap, easy to shrug at. Year 10: simple $1,500, compound about $1,629. Year 20: simple $2,000, compound $2,653. Year 30: simple $2,500, compound about $4,322. Year 40: simple $3,000, compound about $7,040 — well over double the simple result, from nothing but patience. Notice the pattern: the gap grows slowly, then faster, then dramatically. Compounding curves bend upward; simple interest never bends at all. Anyone who judges the difference after two or three years will conclude it hardly matters, and will be wrong in the most expensive way.</p>
+
+          <h2>A bigger stage: $10,000 at 7% for 30 years</h2>
+          <p>Simple interest pays $700 a year, every year: $21,000 of interest over three decades, ending at $31,000. Compound interest, calculated monthly, ends at about $81,165 — interest of roughly $71,165. Same deposit, same quoted rate, same thirty years; the compound account finishes with about two and a half times the money. Push the horizon to 40 years and the compound result roughly doubles again while the simple result merely adds another $7,000. Time is the multiplier that simple interest never gets to use.</p>
+          <p>Here is the detail that surprises people most: in the compound account, the interest earned during the final year alone is over $5,300 — more than seven times the flat $700 the simple account pays. That is because by then the interest is being calculated on a balance of about $76,000, most of which is itself accumulated interest. The snowball metaphor is overused precisely because it is accurate.</p>
+
+          <h2>Where each kind actually shows up</h2>
+          <p>Simple interest is not a museum piece; you will still meet it. Many car loans and short-term consumer loans are structured on simple interest, calculated daily on the outstanding balance — which is why extra payments on such loans help immediately: they shrink the base. Some bonds and older-style savings products quote simple interest. Certain student and personal loans use it too. Its virtue is transparency: the cost is easy to compute and easy to predict.</p>
+          <p>Compound interest governs most savings accounts, money market accounts, reinvested investment returns — and, on the other side of the ledger, credit card balances and most revolving debt. The same mechanism that makes a retirement account bloom makes an unpaid card balance metastasise. Whenever you see an account described with an APY (annual percentage yield) rather than a plain rate, you are looking at compounding already folded into the number, which is why APY is the right figure for comparing savings accounts.</p>
+
+          <h2>The borrower's mirror image</h2>
+          <p>Everything flattering said about compounding for savers is alarming for borrowers. A $3,000 card balance at 24% APR with interest compounding monthly doubles in about three years if untouched — the <a href="#/guides/rule-of-72">Rule of 72</a> gives that answer instantly (72 ÷ 24 = 3). This is why paying a little more than the minimum matters so much: every extra dollar of principal removed is a dollar that stops generating interest on interest. When you run numbers in our <a href="#/">calculator</a>, you are looking at the saver's view; flip the sign and it is also the most honest picture of what expensive debt does.</p>
+
+          <h2>Which one should you care about?</h2>
+          <p>Both, in their places. When you save or invest, compounding is your engine — give it time, as our guide on <a href="#/guides/starting-early">starting at 25 versus 35</a> demonstrates with uncomfortable clarity. When you borrow, ask whether interest is simple or compounding, how often it compounds, and what the balance will be if life gets in the way of your repayment plan. The two formulas are not rivals; they are the two directions of the same road, and knowing which direction you are travelling is most of financial literacy in one lesson.</p>
+        </div>
+      </section>
+
+      <!-- ================= GUIDE 4 ================= -->
+      <section class="route" data-route="guide-early">
+        <div class="page-head prose">
+          <p class="crumb"><a href="#/">Home</a> · <a href="#/guides">Guides</a></p>
+          <h1>Why Starting at 25 Beats Starting at 35 (With Numbers)</h1>
+          <p class="lede">Two savers, the same $200 a month, the same 7% return, the same retirement at 65. The only difference is a ten-year head start — and it is worth roughly $281,000. Here is the full arithmetic, with nothing hidden.</p>
+        </div>
+        <div class="prose">
+          <h2>Meet the two savers</h2>
+          <p>Amara starts saving at 25. Every month she moves $200 into an investment that returns an average of 7% a year, compounded monthly, and she keeps going until she turns 65. Bilal does exactly the same thing — same $200, same return — but life, rent and a first car get in the way, and he starts at 35 instead. Both stop contributing at 65. The question is how much the lost decade costs Bilal, and the honest answer is: far more than the decade's contributions.</p>
+          <p>Amara contributes for 40 years: 480 monthly payments of $200, a total of $96,000 out of her own pocket. Her balance at 65 is roughly <strong>$525,000</strong>. Bilal contributes for 30 years: 360 payments totalling $72,000, and his balance at 65 is roughly <strong>$244,000</strong>. He saved $24,000 less than Amara — and ends up with about $281,000 less. Every figure here can be reproduced in our <a href="#/">compound interest calculator</a> in under a minute; we encourage you to check us.</p>
+
+          <h2>Where the gap comes from</h2>
+          <p>Look at the interest column and the story sharpens. Of Amara's $525,000, only $96,000 is money she deposited; about $429,000 is growth — interest earning interest earning interest. Of Bilal's $244,000, $72,000 is deposits and about $172,000 is growth. Amara's money did not work a little harder; it worked for ten more years, and crucially, those were the years at the <em>end</em> of the curve in disguise. Wait — that needs care. Amara's extra decade is at the beginning of her timeline. Why does an early decade matter so much more than a late one?</p>
+          <p>Because compounding builds on whatever balance exists. By the time Amara turns 35, her account holds roughly $34,600 — about $24,000 deposited and $10,600 of growth. From that moment on, she and Bilal are saving identically, dollar for dollar. But Amara's existing $34,600 keeps compounding alongside every new contribution, for thirty more years. That head-start balance alone, never topped up, would grow to roughly $281,000 by 65 — more than Bilal's entire final balance. The early decade is not ten years of small deposits; it is the seed capital that the remaining thirty years multiply. As the <a href="#/guides/rule-of-72">Rule of 72</a> puts it, at 7% money doubles about every ten years, so a head start of one decade means every early dollar gets one extra doubling that late money never receives.</p>
+
+          <h2>Can Bilal catch up?</h2>
+          <p>He can try, and the attempt is instructive. To reach Amara's $525,000 by 65 starting at 35, Bilal would need to save about $430 a month instead of $200 — more than double, sustained for thirty years. Alternatively, keeping $200 a month, he would need an average return of roughly 10.7% a year instead of 7% — a meaningfully riskier portfolio, demanded for three straight decades. Or he could retire at about 75 instead of 65, giving his money the years he could not give it at the start. Each route is possible; none is as painless as the ten years themselves. Time is the one input that cannot be increased later by effort, only by waiting longer at the far end.</p>
+
+          <h2>The honest caveats</h2>
+          <p>Real life is messier than this example. Returns do not arrive as a smooth 7%; markets fall as well as rise, and the average hides the ride. Inflation will shrink what $525,000 buys in forty years — at 3% inflation its purchasing power is roughly that of $161,000 today, and Bilal's $244,000 shrinks to about $100,000 in today's terms. The comparison still holds — the ratio between the two savers barely moves — but the absolute numbers should be read as illustrations of a mechanism, not predictions. Taxes, fees and contribution increases over a career all shift the details too. None of that rescues the late start; if anything, real-world friction makes the early years more valuable, not less.</p>
+          <p>There is also a fairness point worth making plainly: many people cannot save at 25. Low wages, debt, family obligations and plain bad luck are real, and this guide is not a scolding. It is arithmetic. If you are 35, or 45, or 55, the same maths that punishes delay rewards beginning now rather than next year — the best decade to start was the last one, and the second-best is this one. Our guide on <a href="#/guides/compound-vs-simple-interest">compound versus simple interest</a> shows why even modest sums, compounding, pull away from money left idle.</p>
+
+          <h2>What to do with this</h2>
+          <p>Start with whatever amount is genuinely sustainable — $50 a month compounding from today beats $300 a month planned for a someday that keeps moving. Automate the contribution so it does not depend on monthly willpower. Then leave it alone: the curve does its best work in the years when it looks most boring. And if you want to see your own version of Amara and Bilal, run both scenarios in the <a href="#/">calculator</a> with your real numbers. The gap, made personal, tends to settle the argument.</p>
+        </div>
+      </section>
+
+      <!-- ================= GUIDE 5 ================= -->
+      <section class="route" data-route="guide-frequency">
+        <div class="page-head prose">
+          <p class="crumb"><a href="#/">Home</a> · <a href="#/guides">Guides</a></p>
+          <h1>How Often Should Interest Compound? Daily vs Monthly vs Yearly</h1>
+          <p class="lede">Banks advertise daily compounding as though it were a superpower. It is a real advantage — and a much smaller one than the marketing suggests. Here are the actual differences, in dollars.</p>
+        </div>
+        <div class="prose">
+          <h2>What frequency changes, mechanically</h2>
+          <p>Compounding frequency is how often the interest you have earned is officially added to your balance, so that it can start earning interest itself. With yearly compounding, a full year passes before any interest joins the principal. With monthly compounding, interest is folded in every month; with daily, every day. Between those crediting moments, your earned interest is in limbo — calculated, perhaps, but not yet compounding. Shorten the limbo and you grow slightly faster. The <a href="#/guides/compound-interest-formula">formula</a> captures this in the letter n: the number of compounding periods per year.</p>
+          <p>An important subtlety: with more frequent compounding, each individual interest payment is smaller — a month's interest at 8% is roughly 0.67%, a day's is about 0.022% — but there are more of them, and each one starts compounding sooner. The net effect is always positive. The question is only how positive.</p>
+
+          <h2>The numbers: $10,000 at 8% for 20 years</h2>
+          <p>Compounded <strong>yearly</strong>, the balance reaches about $46,610. Compounded <strong>quarterly</strong>, about $48,754. Compounded <strong>monthly</strong>, about $49,268. Compounded <strong>daily</strong>, about $49,522. Read those gaps carefully. Moving from yearly to quarterly gains about $2,144. Quarterly to monthly gains about $514. Monthly to daily gains about $254 — on a twenty-year, five-figure investment earning a strong 8%. Daily compounding is better, the way a slightly shorter queue is better: genuinely, and not worth reorganising your life around.</p>
+          <p>The pattern is diminishing returns, and it is mathematical, not incidental. Each doubling of frequency captures a smaller slice of the remaining limbo time, and there is a hard ceiling — continuous compounding, interest folded in at every instant — which for this example lands near $49,530, barely $8 above daily. Monthly compounding already captures the overwhelming majority of everything frequency can ever give you.</p>
+
+          <h2>Why the effective rate tells the truth</h2>
+          <p>Frequency differences are exactly why savings accounts are compared by APY — annual percentage yield — rather than the headline rate. APY folds compounding in: an account paying 5% compounded monthly has an APY of about 5.12%, while 5% compounded yearly has an APY of exactly 5%. Two accounts advertising "5%" can therefore be genuinely different products, and APY is the number that exposes it. When you compare accounts, compare APYs and you have compared frequency and rate in a single figure. When you use our <a href="#/">calculator</a>, the frequency selector lets you watch this effect directly: hold everything else fixed and flip between yearly, monthly and daily.</p>
+
+          <h2>When frequency actually matters</h2>
+          <p>Three situations give frequency real weight. First, <strong>very large balances</strong>: 0.5% of difference on $10,000 is $254 over twenty years, but on $1,000,000 it is about $25,000 — the percentages scale with the principal. Second, <strong>high rates</strong>: the gap between frequencies widens as the rate rises, which is why daily compounding on credit card debt (where rates exceed 20%) is so punishing — frequency is a multiplier on whatever rate you face, for you or against you. Third, <strong>short timeframes with frequent deposits</strong>, where money arrives and needs to start working quickly. Notice what is absent from the list: the ordinary saver choosing between two similar accounts. For them, a 0.25% difference in the rate itself beats any frequency difference on offer — 8% compounded yearly outgrows 7.5% compounded daily over twenty years, and it is not close.</p>
+
+          <h2>What to prioritise instead</h2>
+          <p>Rank your decisions in this order. First, <strong>time</strong>: starting earlier beats every other optimisation, as the numbers in <a href="#/guides/starting-early">starting at 25 versus 35</a> make plain. Second, <strong>the rate</strong>: a single percentage point of return, compounded over decades, dwarfs frequency effects. Third, <strong>consistency of contributions</strong>: money regularly added gives compounding more to work on. Fourth, and only fourth, <strong>frequency</strong> — take daily over monthly when it costs you nothing, and never pay a lower rate, higher fees or worse terms to get it. The <a href="#/guides/rule-of-72">Rule of 72</a> does not even ask about frequency, and that silence is itself the lesson: at the scale of a human financial life, how long and how fast matter; how often is a footnote.</p>
+
+          <h2>The bottom line</h2>
+          <p>Daily compounding beats monthly beats yearly — always, and by less than you have been led to believe. Choose accounts by APY, chase rate and time before frequency, and let the <a href="#/">calculator</a> show you the exact size of the difference for your own numbers before you let it influence a decision.</p>
+        </div>
+      </section>
+
+      <!-- ================= ABOUT ================= -->
+      <section class="route" data-route="about">
+        <div class="page-head prose">
+          <h1>About CompoundInterestHub</h1>
+        </div>
+        <div class="prose">
+          <p>CompoundInterestHub exists for one reason: compound interest is the most important idea in everyday finance and one of the least intuitively understood. Almost everyone has heard that it matters. Far fewer people can say, with numbers, how much it matters — how a decade changes the outcome, what a percentage point is worth, or why the last years of a savings plan do more work than the first. This site closes that gap with a free <a href="#/">calculator</a> and a small library of plain-English <a href="#/guides">guides</a>, every number in which you can reproduce yourself.</p>
+          <h2>What you will find here</h2>
+          <p>The heart of the site is the calculator: principal, rate, time, compounding frequency and monthly contributions in; future value, total contributions, interest earned, a growth chart and a year-by-year breakdown out. Around it sit five long guides, each devoted to a single question — <a href="#/guides/compound-interest-formula">the formula itself</a>, <a href="#/guides/rule-of-72">the Rule of 72</a>, <a href="#/guides/compound-vs-simple-interest">compound versus simple interest</a>, <a href="#/guides/starting-early">the value of starting early</a>, and <a href="#/guides/compounding-frequency">compounding frequency</a>. We write the way we would want the subject explained to us: ordinary words first, formulas translated rather than merely displayed, and concrete examples with real arithmetic throughout.</p>
+          <h2>How the numbers are computed</h2>
+          <p>No black boxes. The calculator simulates your balance month by month using the standard compound interest method described in our <a href="#/guides/compound-interest-formula">formula guide</a>: each month, your balance grows by the effective monthly rate implied by your chosen annual rate and compounding frequency, and your monthly contribution is added at the end of the month. Everything runs in your browser — your figures are never sent to or stored on a server, because there is no server involved in the calculation at all.</p>
+          <h2>What this site is not</h2>
+          <p>CompoundInterestHub is an educational resource, not a financial adviser. We do not sell financial products, manage money, or give personalised recommendations, and nothing here should be read as advice tailored to your situation. Rates of return in our examples are illustrations, not forecasts; real investments fluctuate and can lose value. For decisions about your own money, a qualified, regulated financial adviser who knows your circumstances is the right destination. Our <a href="#/disclaimer">Disclaimer</a> states this in full.</p>
+          <h2>Get in touch</h2>
+          <p>Found an error in an example? Want a guide on a topic we have not covered? We genuinely want to hear it — corrections make the site better for everyone. Reach us through the <a href="#/contact">Contact page</a>, and check the <a href="#/faq">FAQ</a> first for answers to the questions we hear most.</p>
+        </div>
+      </section>
+
+      <!-- ================= FAQ ================= -->
+      <section class="route" data-route="faq">
+        <div class="page-head prose">
+          <h1>Frequently asked questions</h1>
+          <p class="lede">Straight answers to the questions visitors ask most. For the deep dives, see the <a href="#/guides">guides</a>.</p>
+        </div>
+        <div>
+          <details class="faq">
+            <summary>How does the calculator work?</summary>
+            <p>It simulates your balance month by month. Each month, your balance grows by the effective monthly rate derived from your annual rate and compounding frequency, and your monthly contribution (if any) is added at the end of the month. The future value, total contributions and interest earned are read off that simulation, and the year-by-year table shows the balance at each year end. The underlying maths is the standard compound interest formula, explained in <a href="#/guides/compound-interest-formula">our formula guide</a>.</p>
+          </details>
+          <details class="faq">
+            <summary>What interest rate should I enter?</summary>
+            <p>Enter the rate that matches what you are modelling: the stated rate of a savings account, the yield on a bond, or a long-run average you consider reasonable for an investment portfolio. There is no single correct figure — the honest approach is to run several scenarios (for example 4%, 6% and 8%) and treat the truth as a range rather than a point. Remember that higher assumed returns usually come with higher risk and bumpier years.</p>
+          </details>
+          <details class="faq">
+            <summary>Is compound interest better than simple interest?</summary>
+            <p>For a saver, yes: compound interest pays interest on your interest, so it always grows faster than simple interest at the same rate, and the gap widens dramatically over long periods. For a borrower the reverse is true. We compare the two with worked examples in <a href="#/guides/compound-vs-simple-interest">Compound vs Simple Interest: Real Examples</a>.</p>
+          </details>
+          <details class="faq">
+            <summary>What is the Rule of 72?</summary>
+            <p>A mental shortcut: divide 72 by your annual rate of return to estimate how many years your money takes to double. At 8% it doubles in about 9 years; at 6%, about 12 years. It also works for inflation and debt. See <a href="#/guides/rule-of-72">The Rule of 72</a> for its accuracy and limits.</p>
+          </details>
+          <details class="faq">
+            <summary>How much difference does compounding frequency make?</summary>
+            <p>Less than most people expect. Daily compounding beats monthly, which beats yearly — but on $10,000 at 8% over 20 years, the entire spread from yearly to daily is under $3,000, and monthly already captures most of it. Rate, time and contributions matter far more. The full comparison is in <a href="#/guides/compounding-frequency">Daily vs Monthly vs Yearly</a>.</p>
+          </details>
+          <details class="faq">
+            <summary>Does the calculator account for inflation, taxes or fees?</summary>
+            <p>No. The results are nominal figures before inflation, tax and any account or investment fees, all of which reduce real-world outcomes. As a rough adjustment for inflation, you can enter a lower "real" rate — for example, if you expect 7% returns and 3% inflation, modelling 4% gives a picture in today's purchasing power.</p>
+          </details>
+          <details class="faq">
+            <summary>Is this financial advice?</summary>
+            <p>No. CompoundInterestHub is an educational tool. The calculator and guides explain how compound growth works; they do not recommend any product, account or investment, and they are not tailored to your circumstances. Please read the <a href="#/disclaimer">Disclaimer</a> and consider a regulated financial adviser for personal decisions.</p>
+          </details>
+          <details class="faq">
+            <summary>Is my data stored or shared?</summary>
+            <p>No. The calculator runs entirely in your browser; the numbers you type never leave your device. Our <a href="#/privacy">Privacy Policy</a> explains the position in full.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ================= CONTACT ================= -->
+      <section class="route" data-route="contact">
+        <div class="page-head prose">
+          <h1>Contact us</h1>
+          <p class="lede">Corrections, guide suggestions and questions about how the calculator works are all welcome. We read everything, though replies may take a few days.</p>
+        </div>
+        <form class="contact" id="contact-form">
+          <label for="cf-name">Your name</label>
+          <input type="text" id="cf-name" autocomplete="name" required />
+          <label for="cf-email">Your email</label>
+          <input type="email" id="cf-email" autocomplete="email" required />
+          <label for="cf-subject">Subject</label>
+          <input type="text" id="cf-subject" required />
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" required></textarea>
+          <button type="submit" class="btn">Open in your email app</button>
+          <p class="form-note">This form opens your own email app with the message addressed and filled in, ready for you to send — nothing is submitted to a server. Before writing, you may find your answer on the <a href="#/faq">FAQ page</a>.</p>
+        </form>
+      </section>
+
+      <!-- ================= PRIVACY ================= -->
+      <section class="route" data-route="privacy">
+        <div class="page-head prose">
+          <h1>Privacy Policy</h1>
+          <p class="lede">Last updated: November 2026</p>
+        </div>
+        <div class="prose">
+          <p>This policy explains what information CompoundInterestHub ("we", "the site") does and does not collect when you visit. The short version: the calculator runs entirely in your browser, and we do not collect, store or sell personal information about you.</p>
+          <h2>Information you enter into the calculator</h2>
+          <p>The figures you type into the calculator — amounts, rates and time periods — are processed locally on your device by your own browser. They are never transmitted to us, never stored in a database, and never associated with your identity. If you close the page, the numbers are gone.</p>
+          <h2>Accounts and forms</h2>
+          <p>The site has no user accounts and no sign-up. The contact form does not submit data to a server; it opens your own email application with a pre-filled message, which you choose whether to send. If you do email us, we will see the name, email address and message you send, and we use them only to reply to you.</p>
+          <h2>Cookies and analytics</h2>
+          <p>The site does not set advertising or tracking cookies of its own. Standard, privacy-respecting hosting logs (such as IP addresses and browser types recorded automatically by web servers) may exist at the hosting level and are used only for security and reliability. We do not build profiles of visitors, and we do not sell or rent any data to third parties.</p>
+          <h2>External links</h2>
+          <p>Where the site links to other websites, those sites have their own privacy practices, which we do not control and for which we are not responsible. We encourage you to read the privacy policy of any site you visit.</p>
+          <h2>Children</h2>
+          <p>The site is a general educational resource and is not directed at children under 13. We do not knowingly collect information from children.</p>
+          <h2>Changes to this policy</h2>
+          <p>If this policy changes, the updated version will be published on this page with a revised date. Continued use of the site after a change means you accept the updated policy.</p>
+          <h2>Questions</h2>
+          <p>Questions about this policy can be sent via the <a href="#/contact">Contact page</a>.</p>
+        </div>
+      </section>
+
+      <!-- ================= TERMS ================= -->
+      <section class="route" data-route="terms">
+        <div class="page-head prose">
+          <h1>Terms of Use</h1>
+          <p class="lede">Last updated: November 2026</p>
+        </div>
+        <div class="prose">
+          <p>By using CompoundInterestHub, you agree to these terms. If you do not agree with them, please do not use the site.</p>
+          <h2>Educational purpose</h2>
+          <p>The calculator, guides and all other content on this site are provided for general education about how compound interest works. They are not financial, investment, tax or legal advice, and they are not a recommendation to buy, sell or hold any financial product. See also our <a href="#/disclaimer">Disclaimer</a>.</p>
+          <h2>Accuracy of calculations</h2>
+          <p>We work to keep the calculator's maths correct and the guides' examples accurate, and every worked example on the site can be reproduced with the calculator. However, results are estimates based on the assumptions you enter — a constant rate of return, regular contributions and no taxes, fees or inflation unless you model them yourself. Real financial outcomes will differ. We make no guarantee that any result will match the performance of any actual account or investment.</p>
+          <h2>Acceptable use</h2>
+          <p>You may use the site for personal, non-commercial purposes and share links to its pages. You may not misuse the site, attempt to disrupt its operation, or reproduce substantial portions of its content for republication without permission.</p>
+          <h2>Intellectual property</h2>
+          <p>The text, design and code of this site belong to CompoundInterestHub unless otherwise noted. Short quotations with a link back to the source page are welcome.</p>
+          <h2>External links</h2>
+          <p>The site may link to third-party websites for reference. We are not responsible for the content, accuracy or practices of external sites.</p>
+          <h2>Limitation of liability</h2>
+          <p>To the fullest extent permitted by law, CompoundInterestHub is not liable for any loss or damage arising from reliance on the calculator's results or the guides' content. Financial decisions are your responsibility; consider consulting a qualified, regulated adviser before making them.</p>
+          <h2>Changes</h2>
+          <p>We may update these terms from time to time. The current version will always be available on this page, and continued use of the site constitutes acceptance of the updated terms.</p>
+        </div>
+      </section>
+
+      <!-- ================= DISCLAIMER ================= -->
+      <section class="route" data-route="disclaimer">
+        <div class="page-head prose">
+          <h1>Disclaimer</h1>
+          <p class="lede">Please read this before relying on anything on this site.</p>
+        </div>
+        <div class="prose">
+          <div class="callout">
+            <p class="callout-title">Education only — not financial advice</p>
+            <p>CompoundInterestHub teaches the mathematics of compound interest. Nothing on this site is financial advice, investment advice, tax advice or a recommendation of any kind, and nothing here is tailored to any individual's circumstances.</p>
+          </div>
+          <h2>Estimates, not predictions</h2>
+          <p>Every result produced by the calculator and every worked example in the guides rests on simplifying assumptions: a fixed rate of return, contributions made exactly on schedule, and no deduction for taxes, fees, charges or inflation unless you deliberately model them. Real savings accounts change their rates; real investments rise and fall in value and can lose money. A smooth projection line is a teaching device, not a forecast of what any account or investment will actually do.</p>
+          <h2>No professional relationship</h2>
+          <p>Using this site does not create an adviser–client or any other professional relationship between you and CompoundInterestHub. We do not know your income, debts, goals, tax position or risk tolerance, and content that is sensible as a general illustration may be unsuitable for you personally.</p>
+          <h2>Make decisions carefully</h2>
+          <p>Before making significant financial decisions, verify figures independently and consider speaking with a qualified, regulated financial adviser who can take your full circumstances into account. If any example on this site appears to contain an error, we would be grateful to hear about it via the <a href="#/contact">Contact page</a> so we can correct it.</p>
+          <p>By using this site, you acknowledge and accept this disclaimer together with our <a href="#/terms">Terms of Use</a> and <a href="#/privacy">Privacy Policy</a>.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <h3>CompoundInterestHub</h3>
+          <p>A free compound interest calculator and plain-English guides that show how money grows over time — and why time matters more than almost anything else.</p>
+        </div>
+        <div>
+          <h3>Guides</h3>
+          <ul>
+            <li><a href="#/guides/compound-interest-formula">The Formula in Plain English</a></li>
+            <li><a href="#/guides/rule-of-72">The Rule of 72</a></li>
+            <li><a href="#/guides/compound-vs-simple-interest">Compound vs Simple Interest</a></li>
+            <li><a href="#/guides/starting-early">Starting at 25 vs 35</a></li>
+            <li><a href="#/guides/compounding-frequency">Daily vs Monthly vs Yearly</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Site</h3>
+          <ul>
+            <li><a href="#/">Calculator</a></li>
+            <li><a href="#/about">About</a></li>
+            <li><a href="#/faq">FAQ</a></li>
+            <li><a href="#/contact">Contact</a></li>
+            <li><a href="#/privacy">Privacy Policy</a></li>
+            <li><a href="#/terms">Terms of Use</a></li>
+            <li><a href="#/disclaimer">Disclaimer</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-base">© 2026 CompoundInterestHub. Educational content only — not financial advice.</div>
+    </footer>
+
+    <script>
+      /* ---------- Routing ---------- */
+      var ROUTES = {
+        "": "home", "/": "home",
+        "/guides": "guides",
+        "/guides/compound-interest-formula": "guide-formula",
+        "/guides/rule-of-72": "guide-rule72",
+        "/guides/compound-vs-simple-interest": "guide-simple",
+        "/guides/starting-early": "guide-early",
+        "/guides/compounding-frequency": "guide-frequency",
+        "/about": "about", "/faq": "faq", "/contact": "contact",
+        "/privacy": "privacy", "/terms": "terms", "/disclaimer": "disclaimer"
+      };
+      var TITLES = {
+        "home": "Compound Interest Calculator — CompoundInterestHub",
+        "guides": "Guides to Compound Interest — CompoundInterestHub",
+        "guide-formula": "Compound Interest Explained: The Formula in Plain English — CompoundInterestHub",
+        "guide-rule72": "The Rule of 72: How Fast Your Money Doubles — CompoundInterestHub",
+        "guide-simple": "Compound vs Simple Interest: Real Examples — CompoundInterestHub",
+        "guide-early": "Why Starting at 25 Beats Starting at 35 (With Numbers) — CompoundInterestHub",
+        "guide-frequency": "How Often Should Interest Compound? Daily vs Monthly vs Yearly — CompoundInterestHub",
+        "about": "About — CompoundInterestHub",
+        "faq": "FAQ — CompoundInterestHub",
+        "contact": "Contact — CompoundInterestHub",
+        "privacy": "Privacy Policy — CompoundInterestHub",
+        "terms": "Terms of Use — CompoundInterestHub",
+        "disclaimer": "Disclaimer — CompoundInterestHub"
+      };
+      var NAVMAP = {
+        "home": "home", "guides": "guides",
+        "guide-formula": "guides", "guide-rule72": "guides", "guide-simple": "guides",
+        "guide-early": "guides", "guide-frequency": "guides",
+        "about": "about", "faq": "faq", "contact": "contact"
+      };
+      function currentPath() {
+        var h = window.location.hash.replace(/^#/, "");
+        return h === "" ? "/" : h;
+      }
+      function render() {
+        var key = ROUTES[currentPath()] || "home";
+        var sections = document.querySelectorAll(".route");
+        for (var i = 0; i < sections.length; i++) {
+          sections[i].classList.toggle("active", sections[i].getAttribute("data-route") === key);
+        }
+        document.title = TITLES[key] || TITLES.home;
+        var navKey = NAVMAP[key];
+        var links = document.querySelectorAll("[data-nav]");
+        for (var j = 0; j < links.length; j++) {
+          if (links[j].getAttribute("data-nav") === navKey) links[j].setAttribute("aria-current", "page");
+          else links[j].removeAttribute("aria-current");
+        }
+        window.scrollTo(0, 0);
+      }
+      window.addEventListener("hashchange", render);
+
+      /* ---------- Calculator ---------- */
+      var $ = function (id) { return document.getElementById(id); };
+      var fmt = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+      var fmtFull = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      function num(id, fallback) {
+        var v = parseFloat($(id).value);
+        return isNaN(v) ? fallback : v;
+      }
+
+      function calculate() {
+        var P = Math.max(0, num("in-principal", 0));
+        var C = Math.max(0, num("in-contribution", 0));
+        var r = Math.min(50, Math.max(0, num("in-rate", 0))) / 100;
+        var years = Math.min(60, Math.max(1, Math.round(num("in-years", 1))));
+        var n = parseInt($("in-freq").value, 10) || 12;
+
+        /* Effective monthly growth factor implied by the nominal annual
+           rate and the chosen compounding frequency. */
+        var monthlyRate = Math.pow(1 + r / n, n / 12) - 1;
+
+        var balance = P;
+        var contributed = P;
+        var rows = [{ year: 0, balance: P, contributed: P, interest: 0 }];
+        for (var y = 1; y <= years; y++) {
+          for (var m = 0; m < 12; m++) {
+            balance = balance * (1 + monthlyRate) + C;
+            contributed += C;
+          }
+          rows.push({ year: y, balance: balance, contributed: contributed, interest: balance - contributed });
+        }
+
+        var totalInterest = balance - contributed;
+        $("out-fv").textContent = fmt.format(balance);
+        $("out-contrib").textContent = fmt.format(contributed);
+        $("out-interest").textContent = fmt.format(totalInterest);
+        $("out-share").textContent = balance > 0 ? Math.round((totalInterest / balance) * 100) + "%" : "0%";
+
+        /* Table */
+        var html = "";
+        for (var i = 0; i < rows.length; i++) {
+          var row = rows[i];
+          html += "<tr><td>" + (row.year === 0 ? "Start" : "Year " + row.year) + "</td><td>" +
+            fmt.format(row.contributed) + "</td><td>" + fmt.format(row.interest) + "</td><td><strong>" +
+            fmt.format(row.balance) + "</strong></td></tr>";
+        }
+        $("breakdown-body").innerHTML = html;
+
+        drawChart(rows);
+      }
+
+      function drawChart(rows) {
+        var W = 640, H = 240, padL = 8, padR = 8, padT = 18, padB = 26;
+        var plotW = W - padL - padR, plotH = H - padT - padB;
+        var max = 0;
+        for (var i = 0; i < rows.length; i++) if (rows[i].balance > max) max = rows[i].balance;
+        if (max <= 0) max = 1;
+        var count = rows.length - 1; /* exclude year 0 */
+        var slot = plotW / Math.max(count, 1);
+        var barW = Math.max(2, Math.min(26, slot * 0.62));
+        var accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#047857";
+        var gold = getComputedStyle(document.documentElement).getPropertyValue("--gold").trim() || "#b45309";
+        var soft = getComputedStyle(document.documentElement).getPropertyValue("--ink-soft").trim() || "#666";
+
+        var svg = '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Bar chart of balance growth by year">';
+        /* baseline */
+        svg += '<line x1="' + padL + '" y1="' + (padT + plotH) + '" x2="' + (W - padR) + '" y2="' + (padT + plotH) + '" stroke="' + soft + '" stroke-width="1" opacity="0.5"/>';
+        var labelEvery = count > 20 ? 5 : (count > 10 ? 2 : 1);
+        for (var y = 1; y <= count; y++) {
+          var row = rows[y];
+          var cx = padL + slot * (y - 0.5);
+          var bh = (row.balance / max) * plotH;
+          var ch = (row.contributed / max) * plotH;
+          var top = padT + plotH - bh;
+          svg += '<rect x="' + (cx - barW / 2).toFixed(1) + '" y="' + top.toFixed(1) + '" width="' + barW + '" height="' + bh.toFixed(1) + '" rx="2" fill="' + accent + '"><title>Year ' + y + ": " + fmtFull.format(row.balance) + "</title></rect>";
+          if (ch > 0 && ch < bh) {
+            svg += '<rect x="' + (cx - barW / 2).toFixed(1) + '" y="' + (padT + plotH - ch).toFixed(1) + '" width="' + barW + '" height="' + ch.toFixed(1) + '" rx="2" fill="' + gold + '" opacity="0.85"><title>Contributions by year ' + y + ": " + fmtFull.format(row.contributed) + "</title></rect>";
+          }
+          if (y === count) {
+            svg += '<text x="' + Math.min(cx, W - 60).toFixed(1) + '" y="' + Math.max(top - 5, 10).toFixed(1) + '" font-size="12" font-weight="700" fill="' + accent + '" text-anchor="middle">' + fmt.format(row.balance) + "</text>";
+          }
+          if (y % labelEvery === 0 || y === 1) {
+            svg += '<text x="' + cx.toFixed(1) + '" y="' + (H - 8) + '" font-size="11" fill="' + soft + '" text-anchor="middle">' + y + "</text>";
+          }
+        }
+        svg += "</svg>";
+        $("chart").innerHTML = svg;
+      }
+
+      /* Wire inputs */
+      ["in-principal", "in-contribution", "in-rate", "in-years", "in-freq"].forEach(function (id) {
+        $(id).addEventListener("input", function () {
+          if (id === "in-rate") $("in-rate-range").value = Math.min(15, num("in-rate", 0));
+          if (id === "in-years") $("in-years-range").value = Math.min(50, num("in-years", 1));
+          calculate();
+        });
+        $(id).addEventListener("change", calculate);
+      });
+      $("in-rate-range").addEventListener("input", function () { $("in-rate").value = this.value; calculate(); });
+      $("in-years-range").addEventListener("input", function () { $("in-years").value = this.value; calculate(); });
+
+      var PRESETS = {
+        starter: { p: 1000, c: 100, r: 5, y: 20, f: "12" },
+        retirement: { p: 10000, c: 200, r: 7, y: 40, f: "12" },
+        lump: { p: 25000, c: 0, r: 8, y: 25, f: "12" }
+      };
+      document.querySelectorAll("[data-preset]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var p = PRESETS[btn.getAttribute("data-preset")];
+          if (!p) return;
+          $("in-principal").value = p.p; $("in-contribution").value = p.c;
+          $("in-rate").value = p.r; $("in-rate-range").value = Math.min(15, p.r);
+          $("in-years").value = p.y; $("in-years-range").value = Math.min(50, p.y);
+          $("in-freq").value = p.f;
+          calculate();
+        });
+      });
+
+      /* Contact form -> mailto compose */
+      $("contact-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var subject = encodeURIComponent($("cf-subject").value);
+        var body = encodeURIComponent(
+          "Name: " + $("cf-name").value + "\nEmail: " + $("cf-email").value + "\n\n" + $("cf-message").value
+        );
+        window.location.href = "mailto:?subject=" + subject + "&body=" + body;
+      });
+
+      render();
+      calculate();
+    </script>
+  </body>
+</html>
